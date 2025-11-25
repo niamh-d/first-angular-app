@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Task } from './task/task';
 
 import { dummyTasks } from '../dummy-tasks';
 import { AddTask } from './add-task/add-task';
+import { type NewTaskDto } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -24,11 +25,22 @@ export class Tasks {
     this.listOfTasks = this.listOfTasks.filter((task) => task.id !== taskId);
   }
 
-  onAddNewTask() {
+  onAddNewTask(taskData: NewTaskDto) {
+    this.listOfTasks.unshift({
+      id: new Date().getTime().toString(),
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.dueDate,
+      userId: this.id,
+    });
+    this.showAddTaskDialog = false;
+  }
+
+  onOpenDialog() {
     this.showAddTaskDialog = true;
   }
 
-  onCancelAddTask() {
+  onCloseDialog() {
     this.showAddTaskDialog = false;
   }
 }
