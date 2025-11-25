@@ -7,7 +7,12 @@ export class TasksService {
   private tasks: ITask[] = [];
 
   constructor() {
-    this.tasks = dummyTasks;
+    const tasks = localStorage.getItem('tasks');
+    if (tasks) {
+      this.tasks = JSON.parse(tasks);
+    } else {
+      this.tasks = [...dummyTasks];
+    }
   }
 
   getUserTasks(userId: string) {
@@ -23,9 +28,15 @@ export class TasksService {
       dueDate: taskData.dueDate,
     };
     this.tasks.unshift(newTask);
+    this.saveTasks();
   }
 
   completeTask(taskId: string) {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    this.saveTasks();
+  }
+
+  private saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 }
