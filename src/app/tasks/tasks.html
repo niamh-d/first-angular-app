@@ -1,5 +1,5 @@
 @if(showAddTaskDialog) {
-<app-add-task (cancel)="onCloseDialog()" (add)="onAddNewTask($event)"></app-add-task>
+<app-add-task (close)="onCloseDialog()" [userId]="id"></app-add-task>
 }
 
 <section id="tasks">
@@ -12,7 +12,7 @@
   <ul>
     @for(task of selectedUserTasks; track task.id) {
     <li>
-      <app-task [task]="task" (complete)="onCompleteTask($event)" />
+      <app-task [task]="task" />
     </li>
     } @if(selectedUserTasks.length === 0) {
     <li>No tasks found!</li>
