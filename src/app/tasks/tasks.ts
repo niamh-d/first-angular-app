@@ -27,4 +27,8 @@ export class Tasks {
   onAddNewTask() {
     this.showAddTaskDialog = true;
   }
+
+  onCancelAddTask() {
+    this.showAddTaskDialog = false;
+  }
 }
